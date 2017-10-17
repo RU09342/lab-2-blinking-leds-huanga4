@@ -1,14 +1,11 @@
-//******************************************************************************
-//  MSP430FR5x9x
-//      Extra work
-//  Description: LED1 dims as LED2 gets brighter. When button is held,
-//                  the reverse happens.
+#include <msp430.h> 
 
-//   Austin Huang
 
-//   Built with IAR Embedded Workbench V6.30 & Code Composer Studio V6.1
-//******************************************************************************
-#include <msp430.h>
+/**
+ * main.c
+ * Austin Huang
+ * Extra Work(Wave)
+ */
 
 int main(void)
 {
@@ -31,43 +28,31 @@ int main(void)
          const int duty = 500;              //initialize duty
          int cnt;                          //initialize cnt
 
-         for (cnt = 0; cnt < duty ; cnt++)   //Cnt counts until duty
-         {
+         for (cnt = 0; cnt < duty ; cnt++){   //Cnt counts until duty
              int i;                           //initialize i
 
-             for (i = 0; i < duty; i ++)
-             {
-                 if(!(P2IN & BIT1))    //Button held down, so new function
-                 {
-                     if(i < cnt)
-
-                       {
+             for (i = 0; i < duty; i ++){
+                 if(!(P2IN & BIT1)){    //Button held down, so new function
+                     if(i < cnt){
                           P4OUT &= ~BIT7;   //P4.7 is turned off.
                           P1OUT |= BIT0;    //P1.0 is turned on.
-
-                       }
-                     else
-                        {
+                     }
+                     else{
                           P4OUT |= BIT7;    //P4.7 is turned on.
                           P1OUT &= ~BIT0;   //P1.0 turned on.
-
                         }
-
                  }
-                 else                 //While button is not held down, other function occurs
-                 {
-                     if(i > cnt)   //P1.0 is turned on, dims over time.
-                           {
+                 else{       //While button is not held down, other function occurs
+                     if(i > cnt){   //P1.0 is turned on, dims over time.
                                P4OUT &= ~BIT7; //P4.7 is turned off.
                                P1OUT |= BIT0;  //P1.0 is turned on.
                            }
-                     else
-                           {
+                     else{
                                P4OUT |= BIT7;  //P4.7 is turned on.
                                P1OUT &= ~BIT0; //P1.0 is turned off.
                            }
                  }
              }
          }
-   }
+     }
 }
